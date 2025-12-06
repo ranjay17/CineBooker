@@ -79,9 +79,6 @@ const EditMovie = () => {
     navigate("/");
   };
 
-  // ---------------------------------------
-  // 🔥 SHOW SKELETON UNTIL DATA LOADS
-  // ---------------------------------------
   if (loading) {
     return (
       <div className="max-w-2xl mx-auto mt-10 text-center text-xl font-semibold">

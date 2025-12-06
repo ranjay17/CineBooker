@@ -36,23 +36,17 @@ const AddMovie = () => {
       createdAt: new Date().toISOString(),
     };
 
-    // 1️⃣ Send to Firebase
     const response = await fetch(`${API}/movies.json`, {
       method: "POST",
       body: JSON.stringify(movieData),
     });
 
     const data = await response.json();
-
-    // Firebase generated ID
     const firebaseID = data.name;
-
-    // 2️⃣ Add to Redux with Firebase ID
     dispatch(addMovie({ id: firebaseID, ...movieData }));
 
     alert("Movie Added Successfully!");
 
-    // Clear form
     setTitle("");
     setDescription("");
     setPoster("");
