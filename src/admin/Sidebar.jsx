@@ -23,9 +23,11 @@ const Sidebar = () => {
         </button>
       </Link>
 
-      <button className="w-full flex items-center gap-3 bg-green-100 py-3 px-4 rounded-xl text-green-700 font-medium hover:bg-green-200 transition">
-        <History size={20} /> Booking History
-      </button>
+      <Link to="/admin/bookings">
+        <button className="w-full flex items-center gap-3 bg-green-100 py-3 px-4 rounded-xl text-green-700 font-medium hover:bg-green-200 transition">
+          <History size={20} /> Booking History
+        </button>
+      </Link>
     </div>
   );
 };

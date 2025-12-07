@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { updateMovie } from "../redux/movieSlice";
 
-const API = "https://cinebooker-71e09-default-rtdb.firebaseio.com";
+const API = import.meta.env.VITE_FIREBASE_DB_URL;
 
 const EditMovie = () => {
   const { id } = useParams();

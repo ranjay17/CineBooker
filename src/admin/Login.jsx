@@ -39,11 +39,10 @@ const Login = () => {
         alert("You are NOT authorized for the admin panel!");
         return;
       }
-
-      // store token
       localStorage.setItem("adminToken", data.idToken);
       localStorage.setItem("adminEmail", data.email);
       navigate("/");
+      alert("Login Success")
       window.location.reload();
     } catch (err) {
       alert("Login failed");

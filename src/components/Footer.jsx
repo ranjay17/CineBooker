@@ -1,6 +1,3 @@
-import React from "react";
-import { Link } from "react-router-dom";
-
 const Footer = () => {
   return (
     <footer className="bg-gray-900 text-gray-300 mt-16">
@@ -17,12 +14,12 @@ const Footer = () => {
             <p className="text-sm text-gray-400">
               Email: support@cinebooker.com
             </p>
-            <p className="text-sm text-gray-400 mt-2">Phone: +91 98765 43210</p>
+            <p className="text-sm text-gray-400 mt-2">Phone: +91 123456789</p>
           </div>
         </div>
         <div className="border-t border-gray-700 my-6"></div>
         <p className="text-center text-gray-500 text-sm">
-          © {new Date().getFullYear()} Cine-Booker. All Rights Reserved.
+          © 2025 Cine-Booker. All Rights Reserved.
         </p>
       </div>
     </footer>

@@ -1,4 +1,3 @@
-import React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -6,11 +5,10 @@ const HeroSection = () => {
   const navigate = useNavigate();
   const movies = useSelector((state) => state.movies.items);
 
-  if (movies.length === 0) return null; 
-
-  const heroMovie = movies.find((m) => m.hero === true);
-
-  if (!heroMovie) return null;
+  if (!movies || movies.length === 0) return null;
+  const heroMovies = movies.filter((m) => m.hero === true);
+  if (heroMovies.length === 0) return null;
+  const heroMovie = heroMovies[heroMovies.length - 1];
 
   return (
     <div
@@ -23,7 +21,7 @@ const HeroSection = () => {
         className="absolute inset-0 w-full h-full object-cover"
       />
 
-      <div className="absolute inset-0 bg-black/30"></div>
+      <div className="absolute bg-black/30"></div>
     </div>
   );
 };

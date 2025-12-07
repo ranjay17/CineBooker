@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addMovie } from "../redux/movieSlice";
+import {useNavigate} from "react-router-dom";
 
 const AddMovie = () => {
-  const API = "https://cinebooker-71e09-default-rtdb.firebaseio.com";
+  const API = import.meta.env.VITE_FIREBASE_DB_URL;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -12,6 +15,10 @@ const AddMovie = () => {
   const [category, setCategory] = useState("");
   const [hero, setHero] = useState(false);
   const [shows, setShows] = useState([{ time: "" }]);
+
+  const [director, setDirector] = useState("");
+  const [releaseYear, setReleaseYear] = useState("");
+  const [trailer, setTrailer] = useState("");
 
   const handleShowChange = (index, e) => {
     const updated = [...shows];
@@ -32,6 +39,9 @@ const AddMovie = () => {
       poster,
       category,
       hero,
+      director,
+      releaseYear,
+      trailer,
       shows,
       createdAt: new Date().toISOString(),
     };
@@ -40,12 +50,11 @@ const AddMovie = () => {
       method: "POST",
       body: JSON.stringify(movieData),
     });
-
     const data = await response.json();
     const firebaseID = data.name;
     dispatch(addMovie({ id: firebaseID, ...movieData }));
-
     alert("Movie Added Successfully!");
+    navigate('/')
 
     setTitle("");
     setDescription("");
@@ -53,6 +62,9 @@ const AddMovie = () => {
     setCategory("");
     setHero(false);
     setShows([{ time: "" }]);
+    setDirector("");
+    setReleaseYear("");
+    setTrailer("");
   };
 
   return (
@@ -65,6 +77,33 @@ const AddMovie = () => {
           placeholder="Movie Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          className="border p-2 rounded w-full"
+          required
+        />
+
+        <input
+          type="text"
+          placeholder="Director Name"
+          value={director}
+          onChange={(e) => setDirector(e.target.value)}
+          className="border p-2 rounded w-full"
+          required
+        />
+
+        <input
+          type="number"
+          placeholder="Release Year (e.g., 2024)"
+          value={releaseYear}
+          onChange={(e) => setReleaseYear(e.target.value)}
+          className="border p-2 rounded w-full"
+          required
+        />
+
+        <input
+          type="text"
+          placeholder="Trailer Video Link"
+          value={trailer}
+          onChange={(e) => setTrailer(e.target.value)}
           className="border p-2 rounded w-full"
           required
         />
@@ -94,7 +133,6 @@ const AddMovie = () => {
         >
           <option value="">Select Category</option>
           <option value="Now Playing">Now Playing</option>
-          <option value="Top Movies in Theaters">Top Movies in Theaters</option>
           <option value="Top Rated">Top Rated</option>
         </select>
 

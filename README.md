@@ -1,16 +1,57 @@
-# React + Vite
+# 🎥 CineBooker- Movie Booking App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack movie ticket booking application built with **React + Redux**, **Firebase Realtime Database**, and **TailwindCSS**.  
+Admin can add movies, show timings, hero banner movies, and users can book tickets with email confirmation.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## React Compiler
+### ⭐ User Side
+- Browse movies by category (Now Playing, Top Rated, etc.)
+- Hero section showing latest added hero movie
+- Movie details page with:
+  - Poster  
+  - Description  
+  - Release year  
+  - Director  
+  - Trailer button  
+  - Show timings  
+- Ticket booking modal  
+- Email confirmation after booking  
+- Booking history page  
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🔧 Admin Features
+- Add new movies with:
+  - Title  
+  - Description  
+  - Poster URL  
+  - Category  
+  - Director  
+  - Release Year  
+  - Trailer Link  
+  - Show Timings (multiple)  
+  - Add to Hero Section (optional)  
+- Movies store directly to Firebase  
+- Redux instantly updates UI  
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🏗️ Tech Stack
+
+### **Frontend**
+- React.js  
+- Redux Toolkit  
+- React Router  
+- TailwindCSS  
+
+### **Backend / Database**
+- Firebase Realtime Database  
+- Firebase Authentication  
+
+### **Email Service**
+- EmailJS (for booking confirmation)
+
+---

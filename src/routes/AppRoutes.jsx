@@ -5,6 +5,8 @@ import Header from "../components/Header";
 import AddMovie from "../admin/AddMovie";
 import ManageMovie from "../admin/ManageMovie";
 import EditMovie from "../admin/EditMovie";
+import MovieDetail from "../components/MovieDetail";
+import BookingHistory from "../admin/BookingHistory";
 
 const Layout = () => {
   return (
@@ -41,7 +43,15 @@ const AppRoutes = () => {
         },
         {
           path: "/edit/:id",
-          element: <EditMovie />
+          element: <EditMovie />,
+        },
+        {
+          path: "/movie/:id",
+          element: <MovieDetail />,
+        },
+        {
+          path: "admin/bookings",
+          element: <BookingHistory />,
         },
       ],
     },
