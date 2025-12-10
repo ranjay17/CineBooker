@@ -1,18 +1,15 @@
 import { useEffect, useState } from "react";
-import { ref, onValue } from "firebase/database";
-import { db } from "../firebase/firebaseConfig";
+import axios from "axios";
 
 const BookingHistory = () => {
   const [bookings, setBookings] = useState([]);
-  const [loading, setLoading] = useState(true);
-
   useEffect(() => {
-    const bookingsRef = ref(db, "bookings");
-
-    onValue(bookingsRef, (snapshot) => {
-      const data = snapshot.val();
-      if (data) {
-        const formatted = Object.entries(data).map(([id, value]) => ({
+    const fetchBookings = async () => {
+      const res = await axios.get(
+        `${import.meta.env.VITE_FIREBASE_DB_URL}/bookings.json`
+      );
+      if (res.data) {
+        const formatted = Object.entries(res.data).map(([id, value]) => ({
           id,
           ...value,
         }));
@@ -20,14 +17,10 @@ const BookingHistory = () => {
       } else {
         setBookings([]);
       }
-      setLoading(false);
-    });
-  }, []);
+    };
 
-  if (loading)
-    return (
-      <p className="text-center p-6 text-lg">Loading Booking History...</p>
-    );
+    fetchBookings();
+  }, []);
 
   return (
     <div className="max-w-6xl mx-auto p-6">

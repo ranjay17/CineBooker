@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addMovie } from "../redux/movieSlice";
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
 
 const AddMovie = () => {
   const API = import.meta.env.VITE_FIREBASE_DB_URL;
@@ -46,13 +47,9 @@ const AddMovie = () => {
       createdAt: new Date().toISOString(),
     };
 
-    const response = await fetch(`${API}/movies.json`, {
-      method: "POST",
-      body: JSON.stringify(movieData),
-    });
-    const data = await response.json();
-    const firebaseID = data.name;
-    dispatch(addMovie({ id: firebaseID, ...movieData }));
+    const response = await axios.post(`${API}/movies.json`, movieData);
+
+    dispatch(addMovie({ ...movieData, id: response.data.name }));
     alert("Movie Added Successfully!");
     navigate('/')
 

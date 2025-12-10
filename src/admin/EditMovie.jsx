@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { updateMovie } from "../redux/movieSlice";
+import axios from "axios";
 
 const API = import.meta.env.VITE_FIREBASE_DB_URL;
 
@@ -10,7 +11,7 @@ const EditMovie = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -20,29 +21,19 @@ const EditMovie = () => {
   const [shows, setShows] = useState([{ time: "" }]);
 
   useEffect(() => {
-    let isMounted = true;
-
     const loadMovie = async () => {
-      const res = await fetch(`${API}/movies/${id}.json`);
-      const data = await res.json();
+      const res = await axios.get(`${API}/movies/${id}.json`);
 
-      if (isMounted && data) {
-        setTitle(data.title || "");
-        setDescription(data.description || "");
-        setPoster(data.poster || "");
-        setCategory(data.category || "");
-        setHero(data.hero || false);
-        setShows(data.shows || [{ time: "" }]);
-      }
+      setTitle(res.data.title || "");
+      setDescription(res.data.description || "");
+      setPoster(res.data.poster || "");
+      setCategory(res.data.category || "");
+      setHero(res.data.hero || false);
+      setShows(res.data.shows || [{ time: "" }]);
 
-      setLoading(false); 
+      setLoading(false);
     };
-
     loadMovie();
-
-    return () => {
-      isMounted = false;
-    };
   }, [id]);
 
   const handleShowChange = (index, e) => {
@@ -68,29 +59,21 @@ const EditMovie = () => {
       updatedAt: new Date().toISOString(),
     };
 
-    await fetch(`${API}/movies/${id}.json`, {
-      method: "PUT",
-      body: JSON.stringify(updatedData),
-    });
-
-    dispatch(updateMovie({ id, ...updatedData }));
+    await axios.put(`${API}/movies/${id}.json`, updatedData),
+      dispatch(updateMovie({ id, ...updatedData }));
 
     alert("Movie Updated Successfully!");
     navigate("/");
   };
 
-  if (loading) {
-    return (
-      <div className="max-w-2xl mx-auto mt-10 text-center text-xl font-semibold">
-        Loading movie details...
-      </div>
-    );
-  }
-
   return (
     <div className="max-w-2xl mx-auto bg-white p-6 shadow rounded">
       <h2 className="text-2xl font-bold mb-4">Edit Movie</h2>
-
+      {loading && (
+        <div className="max-w-2xl mx-auto mt-10 text-center text-xl font-semibold">
+          Loading movie details...
+        </div>
+      )}
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="text"

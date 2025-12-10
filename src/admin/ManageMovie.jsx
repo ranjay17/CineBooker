@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setMovies, removeMovie } from "../redux/movieSlice";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const API = import.meta.env.VITE_FIREBASE_DB_URL;
 
@@ -12,25 +13,24 @@ const ManageMovie = () => {
   const movies = useSelector((state) => state.movies.items);
 
   const fetchMovies = async () => {
-    const res = await fetch(`${API}/movies.json`);
-    const data = await res.json();
+    const res = await axios.get(`${API}/movies.json`);
 
-    const loaded = [];
+    const movieArr = [];
 
-    for (let id in data) {
-      loaded.push({
+    for (let id in res.data) {
+      movieArr.push({
         id,
-        ...data[id],
+        ...res.data[id],
       });
     }
 
-    dispatch(setMovies(loaded));
+    dispatch(setMovies(movieArr));
   };
 
   const handleDelete = async (id) => {
     if (!confirm("Are you sure?")) return;
 
-    await fetch(`${API}/movies/${id}.json`, { method: "DELETE" });
+    await axios.delete(`${API}/movies/${id}.json`);
 
     dispatch(removeMovie(id));
     alert("Movie Deleted!");

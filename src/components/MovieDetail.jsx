@@ -6,7 +6,8 @@ import BookingModal from "../components/BookingModal";
 
 const MovieDetail = () => {
   const { id } = useParams();
-  const { loading } = useFetchMovies();
+  useFetchMovies();
+
   const movies = useSelector((state) => state.movies.items);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -14,8 +15,7 @@ const MovieDetail = () => {
 
   const movie = movies.find((m) => m.id === id);
 
-  if (loading || !movie)
-    return <p className="p-6 text-center">Loading movie...</p>;
+  if (!movie) return null;
 
   const openModal = (show) => {
     setSelectedShow(show);

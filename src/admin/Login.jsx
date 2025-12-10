@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const ADMIN_EMAIL = "sranjay15@gmail.com";
 
@@ -12,35 +13,24 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch(
+      const res = await axios.post(
         `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${
           import.meta.env.VITE_FIREBASE_API_KEY
         }`,
         {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
             email,
             password,
             returnSecureToken: true,
-          }),
         }
       );
 
-      const data = await res.json();
-
-      if (data.error) {
-        alert(data.error.message);
-        return;
-      }
-
       // only admin allowed
-      if (data.email !== ADMIN_EMAIL) {
+      if (res.data.email !== ADMIN_EMAIL) {
         alert("You are NOT authorized for the admin panel!");
         return;
       }
-      localStorage.setItem("adminToken", data.idToken);
-      localStorage.setItem("adminEmail", data.email);
+      localStorage.setItem("adminToken", res.data.idToken);
+      localStorage.setItem("adminEmail", res.data.email);
       navigate("/");
       alert("Login Success")
       window.location.reload();

@@ -1,8 +1,7 @@
 import { useState } from "react";
 import emailjs from "@emailjs/browser";
-import { ref, push } from "firebase/database";
-import { db } from "../firebase/firebaseConfig";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const BookingModal = ({ isOpen, onClose, show, movie }) => {
   const [name, setName] = useState("");
@@ -25,7 +24,10 @@ const BookingModal = ({ isOpen, onClose, show, movie }) => {
         createdAt: new Date().toISOString(),
       };
 
-      await push(ref(db, "bookings"), bookingData);
+      await axios.post(
+        `${import.meta.env.VITE_FIREBASE_DB_URL}/bookings.json`,
+        bookingData
+      );
       const emailParams = {
         user_name: name,
         user_email: email,
